@@ -1,6 +1,6 @@
 # AnydoHabitica
 
-A command line integration from Any.do to Habitica
+A command line integration tool from Any.do to Habitica
 
 ## Getting Started
 
