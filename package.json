@@ -1,0 +1,24 @@
+{
+  "name": "todoisthabitica",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "anydo-api": "^0.1.2",
+    "axios": "^0.18.0",
+    "dotenv": "^7.0.0",
+    "immutable": "^4.0.0-rc.12",
+    "lodash": "^4.17.11",
+    "luxon": "^1.12.1",
+    "moment": "^2.24.0"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
