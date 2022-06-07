@@ -3,8 +3,9 @@ const { List } = require('immutable');
 const { Task } = require('./Task');
 
 class Client {
-  constructor (email, password) {
-    this.api = new Api(email, password)
+  constructor (email, password, { ignoreListIds }) {
+    this.api = new Api(email, password);
+    this.ignoreListIds = ignoreListIds || List();
   }
 
   tasks () {
@@ -12,7 +13,10 @@ class Client {
       .then((response) =>  {
         return List(response.models.task.items)
           .filter((item) => item.parentGlobalTaskId == null)
-          .map(item => new Task(item.id, item))
+          .filter((item) => ! this.ignoreListIds.includes(item.categoryId))
+          .map(item => {
+            return new Task(item.id, item);
+          } )
       })
   }
 }

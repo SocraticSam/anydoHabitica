@@ -4,6 +4,7 @@ function toCreate (first, second) {
   const onlyInSecond =
     second.filterNot((todoInFirst) => {
       return first.find((todoInSecond) => {
+        if (! todoInFirst) return false;
         return todoInFirst.asMap().get('alias') === todoInSecond.asMap().get('alias')
       })
     })
@@ -15,6 +16,9 @@ function toCompleteOrIncomplete (first, second) {
   const needUpdating =
     first.filter((todoInFirst) => {
       const todoInSecond = second.find((todoInSecond) => {
+        if (! todoInFirst) return false;
+        if (! todoInSecond) return false;
+
         return todoInFirst.asMap().get('alias') === todoInSecond.asMap().get('alias')
       })
       return todoInSecond &&
@@ -27,6 +31,8 @@ function toUpdate(first, second) {
   const needUpdating =
     second.filter((todoInSecond) => {
       const todoInFirst = first.find((todoInFirst) => {
+        if (! todoInSecond) return false;
+
         return todoInSecond.asMap().get('alias') === todoInFirst.asMap().get('alias')
       })
       return todoInFirst &&

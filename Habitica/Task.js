@@ -30,6 +30,22 @@ class Task {
       frequency: this.frequency
     })
   }
+
+  isCompleted () {
+    return this.completed;
+  }
+  // Flag if a different object needs update
+  // Returns false if it doesn't, or if the alias dont match
+  otherNeedsUpdate(other) {
+    if (! this.alias == other.alias) return false;
+
+    return (
+      this.date  !== other.date ||
+      this.text  !== other.text ||
+      this.notes !== other.notes ||
+      this.priority !== other.priority
+      )
+  }
 }
 
 const priorities = Map({

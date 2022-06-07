@@ -10,6 +10,11 @@ class Task {
           return priorities.toObject()[key] === priority
         })
 
+    if (dueDate == null)
+    {
+      dueDate = 0;
+    }
+
     this.priority = priorityName;
     this.note = note;
     this.title = title;
@@ -35,6 +40,18 @@ class Task {
     })
   }
 
+  isCompleted () {
+    if (this.status === "CHECKED") return true
+    if (this.status === "DONE") return true
+    if (this.status === "UNCHECKED") return false 
+    return false;
+  }
+  
+  equalsHabiticaTodo (hTodo) {
+    const thisAlias = this.id.replace(/\W/g, '');
+    return thisAlias == hTodo.alias; 
+  }
+
   toHabiticaTodo () {
     const type = this.repeatingMethod === 'TASK_REPEAT_OFF'
       || this.repeatingMethod == null ? 'todo' : 'daily'
@@ -50,8 +67,8 @@ class Task {
     })();
 
     return new Habitica.Todo(this.title, type, {
-      completed: isCompleted(this),
-      date: this.dueDate.toISO(),
+      completed: this.isCompleted(),
+      date: this.dueDate.toJSDate().toISOString(),
       alias: this.id.replace(/\W/g, ''),
       notes: this.note,
       priority: Habitica.priorities.toObject()[this.priority],
@@ -64,16 +81,6 @@ const priorities = Map({
   easy: 'Normal',
   hard: 'High'
 })
-
-function isCompleted (task) {
-  if (task.status === "CHECKED") {
-    return true
-  } else if (task.status === "DONE") {
-    return true
-  } else if (task.status === "UNCHECKED") {
-    return false
-  }
-}
 
 module.exports = {
   Task: Task,
