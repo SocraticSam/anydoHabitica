@@ -10,17 +10,18 @@ class Task {
           return priorities.toObject()[key] === priority
         })
 
-    if (dueDate == null)
+
+    this.dueDate = null;
+    if (dueDate != null)
     {
-      dueDate = 0;
+      this.dueDate = DateTime.fromMillis(dueDate);
     }
 
     this.priority = priorityName;
     this.note = note;
     this.title = title;
     this.subTasks = subTasks;
-    this.categoryId = categoryId;
-    this.dueDate = DateTime.fromMillis(dueDate);
+    this.categoryId = categoryId; 
     this.status = status;
     this.id = id;
     this.repeatingMethod = repeatingMethod;
@@ -68,12 +69,17 @@ class Task {
 
     return new Habitica.Todo(this.title, type, {
       completed: this.isCompleted(),
-      date: this.dueDate.toJSDate().toISOString(),
+      date: this.getDueDateString(),
       alias: this.id.replace(/\W/g, ''),
       notes: this.note,
       priority: Habitica.priorities.toObject()[this.priority],
       frequency: frequency
     })
+  }
+
+  getDueDateString () {
+    if (this.dueDate) return this.dueDate.toJSDate().toISOString();
+    return null;
   }
 }
 
