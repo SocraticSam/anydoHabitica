@@ -1,0 +1,12 @@
+services:
+  sync-anydo-habitica:
+    restart: unless-stopped
+    build: .
+    command: ["600"]
+    environment:
+      HABITICA_USER_ID: ${HABITICA_USER_ID}
+      HABITICA_API_TOKEN: ${HABITICA_API_TOKEN}
+      ANYDO_EMAIL: ${ANYDO_EMAIL}
+      ANYDO_PASSWORD: ${ANYDO_PASSWORD}
+           
+
