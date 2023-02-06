@@ -16,6 +16,14 @@ HABITICA_API_TOKEN=<<your Habitica api topken>>
 
 ANYDO_EMAIL=<<the email used by your Any.do account>>
 ANYDO_PASSWORD=<<your Any.do password>>
+
+# Optional
+# Comment separated sequence of list ids to ignore
+# you may find the id for a given list by opening that list
+# in the web-app, and checking the path in:
+# desktop.any.do/tasks/lists/<id>
+# Use this to avoid syncing grocery lists, etc
+ANYDO_IGNORE_LIST_IDS=""
 ```
 
 1. Enter the directory in your terminal, and run: 

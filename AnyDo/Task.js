@@ -10,12 +10,18 @@ class Task {
           return priorities.toObject()[key] === priority
         })
 
+
+    this.dueDate = null;
+    if (dueDate != null)
+    {
+      this.dueDate = DateTime.fromMillis(dueDate);
+    }
+
     this.priority = priorityName;
     this.note = note;
     this.title = title;
     this.subTasks = subTasks;
-    this.categoryId = categoryId;
-    this.dueDate = DateTime.fromMillis(dueDate);
+    this.categoryId = categoryId; 
     this.status = status;
     this.id = id;
     this.repeatingMethod = repeatingMethod;
@@ -35,6 +41,18 @@ class Task {
     })
   }
 
+  isCompleted () {
+    if (this.status === "CHECKED") return true
+    if (this.status === "DONE") return true
+    if (this.status === "UNCHECKED") return false 
+    return false;
+  }
+  
+  equalsHabiticaTodo (hTodo) {
+    const thisAlias = this.id.replace(/\W/g, '');
+    return thisAlias == hTodo.alias; 
+  }
+
   toHabiticaTodo () {
     const type = this.repeatingMethod === 'TASK_REPEAT_OFF'
       || this.repeatingMethod == null ? 'todo' : 'daily'
@@ -50,13 +68,18 @@ class Task {
     })();
 
     return new Habitica.Todo(this.title, type, {
-      completed: isCompleted(this),
-      date: this.dueDate.toISO(),
+      completed: this.isCompleted(),
+      date: this.getDueDateString(),
       alias: this.id.replace(/\W/g, ''),
       notes: this.note,
       priority: Habitica.priorities.toObject()[this.priority],
       frequency: frequency
     })
+  }
+
+  getDueDateString () {
+    if (this.dueDate) return this.dueDate.toJSDate().toISOString();
+    return null;
   }
 }
 
@@ -64,16 +87,6 @@ const priorities = Map({
   easy: 'Normal',
   hard: 'High'
 })
-
-function isCompleted (task) {
-  if (task.status === "CHECKED") {
-    return true
-  } else if (task.status === "DONE") {
-    return true
-  } else if (task.status === "UNCHECKED") {
-    return false
-  }
-}
 
 module.exports = {
   Task: Task,
